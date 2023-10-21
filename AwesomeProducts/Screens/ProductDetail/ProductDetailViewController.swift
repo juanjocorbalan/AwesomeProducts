@@ -5,8 +5,8 @@ import UI
 final class ProductDetailViewController: UIViewController, StoryboardInitializable {
     private var cancellables = Set<AnyCancellable>()
     
-    var viewModel: ProductDetailViewModel!
-    var imageFetcher: ImageFetcher!
+    var viewModel: ProductDetailViewModel?
+    var imageFetcher: ImageFetcher?
     
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var thumbnailImageView: UIImageView!
@@ -52,18 +52,18 @@ final class ProductDetailViewController: UIViewController, StoryboardInitializab
         backgroundImageView.alpha = backgroundImageView.image == nil ? 0.0 : 1.0
         parent?.navigationItem.rightBarButtonItem = UIBarButtonItem(systemItem: .stop,
                                                                     primaryAction: UIAction() { [ weak self ] _ in
-            self?.viewModel.close.send(())
+            self?.viewModel?.close.send(())
         })
     }
     
     private func setupBindings() {
-        viewModel.$thumbnail
+        viewModel?.$thumbnail
             .compactMap { $0 }
             .flatMap { [ weak self ] url in
                 Future<UIImage?, Error> { promise in
                     Task {
                         do {
-                            let image = try await self?.imageFetcher.fetchImage(from: url)
+                            let image = try await self?.imageFetcher?.fetchImage(from: url)
                             promise(.success(image))
                         } catch {
                             promise(.failure(error))
@@ -76,13 +76,13 @@ final class ProductDetailViewController: UIViewController, StoryboardInitializab
             })
             .store(in: &cancellables)
         
-        viewModel.$background
+        viewModel?.$background
             .compactMap { $0 }
             .flatMap { [ weak self ] url in
                 Future<UIImage?, Error> { promise in
                     Task {
                         do {
-                            let image = try await self?.imageFetcher.fetchImage(from: url)
+                            let image = try await self?.imageFetcher?.fetchImage(from: url)
                             promise(.success(image))
                         } catch {
                             promise(.failure(error))
@@ -95,7 +95,7 @@ final class ProductDetailViewController: UIViewController, StoryboardInitializab
             })
             .store(in: &cancellables)
         
-        viewModel.$name
+        viewModel?.$name
             .map { $0 }
             .sink(receiveValue: { [ weak self] title in
                 self?.parent?.navigationItem.title = title
@@ -103,17 +103,17 @@ final class ProductDetailViewController: UIViewController, StoryboardInitializab
             })
             .store(in: &cancellables)
         
-        viewModel.$brand
+        viewModel?.$brand
             .map { $0 }
             .assign(to: \.text, on: brandLabel)
             .store(in: &cancellables)
         
-        viewModel.$category
+        viewModel?.$category
             .map { $0 }
             .assign(to: \.text, on: categoryLabel)
             .store(in: &cancellables)
         
-        viewModel.$text
+        viewModel?.$text
             .map { $0 }
             .assign(to: \.text, on: descriptionTextView)
             .store(in: &cancellables)

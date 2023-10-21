@@ -4,7 +4,7 @@ import UI
 
 final class ProductListViewController: UIViewController, StoryboardInitializable {
     
-    var viewModel: ProductListViewModel!
+    var viewModel: ProductListViewModel?
     
     @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -28,7 +28,7 @@ final class ProductListViewController: UIViewController, StoryboardInitializable
                 else { return UICollectionViewCell() }
             cellViewModel.removeSelected
                 .sink(receiveValue: { [weak self] _ in
-                    self?.viewModel.productDeleted.send(cellViewModel.id)
+                    self?.viewModel?.productDeleted.send(cellViewModel.id)
                 })
                 .store(in: &cell.cancellables)
             cell.setup(with: cellViewModel)
@@ -77,18 +77,19 @@ final class ProductListViewController: UIViewController, StoryboardInitializable
         setupUI()
         setupBindings()
 
-        viewModel.reload.send(())
+        viewModel?.reload.send(())
     }
     
     private func setupUI() {
         collectionView.refreshControl = refreshControl
         collectionView.delegate = self
         collectionView.collectionViewLayout = createLayout()
+        collectionView.accessibilityIdentifier = "collectionViewProducts"
     }
     
     private func setupBindings() {
         
-        viewModel.$title
+        viewModel?.$title
             .map { $0 }
             .sink(receiveValue: { [weak self] title in
                 self?.title = title
@@ -96,7 +97,7 @@ final class ProductListViewController: UIViewController, StoryboardInitializable
             })
             .store(in: &cancellables)
         
-        viewModel.$products
+        viewModel?.$products
             .handleEvents(receiveOutput: { [weak self] _ in
                 DispatchQueue.main.async {
                     self?.refreshControl.endRefreshing()
@@ -110,7 +111,7 @@ final class ProductListViewController: UIViewController, StoryboardInitializable
             })
             .store(in: &cancellables)
 
-        viewModel.$errorMessage
+        viewModel?.$errorMessage
             .filter { $0 != nil }
             .sink(receiveValue: { [weak self] message in
                 self?.refreshControl.endRefreshing()
@@ -118,7 +119,7 @@ final class ProductListViewController: UIViewController, StoryboardInitializable
             })
             .store(in: &cancellables)
 
-        viewModel.$isLoading
+        viewModel?.$isLoading
             .map { !$0 || self.refreshControl.isRefreshing }
             .sink(receiveValue: { [weak self] shouldHide in
                 self?.loadingView.isHidden = shouldHide
@@ -126,7 +127,7 @@ final class ProductListViewController: UIViewController, StoryboardInitializable
             .store(in: &cancellables)
         
         refreshControl.addAction(UIAction() { [ weak self ] _ in
-            self?.viewModel.reload.send(())
+            self?.viewModel?.reload.send(())
         }, for: .valueChanged)
     }
 }
@@ -138,7 +139,7 @@ extension ProductListViewController: UICollectionViewDelegate {
         if let cell = collectionView.cellForItem(at: indexPath) {
             selectedProductFrame = cell.contentView.convert(cell.contentView.frame, to: view)
         }
-        viewModel.productSelected.send(productId)
+        viewModel?.productSelected.send(productId)
     }
 }
 

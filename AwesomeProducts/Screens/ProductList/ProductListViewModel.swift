@@ -12,8 +12,8 @@ final class ProductListViewModel {
     
     // MARK: - Inputs
     
-    let productSelected = PassthroughSubject<Int, Never>()
-    let productDeleted = PassthroughSubject<Int, Error>()
+    let productSelected = PassthroughSubject<String, Never>()
+    let productDeleted = PassthroughSubject<String, Error>()
     let reload = PassthroughSubject<Void, Error>()
     
     // MARK: - Outputs

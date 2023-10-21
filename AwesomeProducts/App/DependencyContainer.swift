@@ -2,23 +2,23 @@ import Domain
 import Data
 import UI
 
-final class DependencyContainer {
+class DependencyContainer {
     static let shared = DependencyContainer()
     
-    private init() {}
+    init() {}
     
     func resolve() -> AppFlowControllerProtocol {
         return AppFlowController(dependencies: self)
     }
     
-    func resolve(parentFlow: AppFlowControllerProtocol) -> ProductsListFlowControllerProtocol {
-        return ProductsListFlowController(dependencies: self, parentFlow: nil)
+    func resolve(parentFlow: AppFlowControllerProtocol?) -> ProductsListFlowControllerProtocol {
+        return ProductsListFlowController(dependencies: self, parentFlow: parentFlow)
     }
-
-    func resolve(product: Product, parentFlow: ProductsListFlowControllerProtocol) -> ProductDetailFlowControllerProtocol {
+    
+    func resolve(product: Product, parentFlow: ProductsListFlowControllerProtocol?) -> ProductDetailFlowControllerProtocol {
         ProductsLDetailFlowController(product: product, dependencies: self, parentFlow: parentFlow)
     }
-
+    
     @MainActor
     func resolve(parentFlow: ProductsListFlowControllerProtocol) -> ProductListViewController {
         let viewController = ProductListViewController.initFromStoryboard()
@@ -27,10 +27,10 @@ final class DependencyContainer {
     }
     
     @MainActor
-    func resolve(parentFlow: ProductsListFlowControllerProtocol) -> ProductListViewModel {
+    func resolve(parentFlow: ProductsListFlowControllerProtocol?) -> ProductListViewModel {
         return ProductListViewModel(getProductsUseCase: resolve(),
-                                       deleteProductUseCase: resolve(),
-                                       flowController: parentFlow)
+                                    deleteProductUseCase: resolve(),
+                                    flowController: parentFlow)
     }
     
     @MainActor
@@ -45,11 +45,11 @@ final class DependencyContainer {
     func resolve(product: Product) -> ProductDetailViewModel {
         return ProductDetailViewModel(product: product)
     }
-
+    
     func resolve() -> GetProductsUseCase {
         return GetProductsUseCase(repository: resolve())
     }
-
+    
     func resolve() -> DeleteProductUseCase {
         return DeleteProductUseCase(repository: resolve())
     }

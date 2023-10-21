@@ -11,7 +11,7 @@ final class ProductsListFlowController: UIViewController {
     let dependencies: DependencyContainer
     let parentFlow: FlowControllerProtocol?
 
-    init(dependencies: DependencyContainer, parentFlow: ProductsListFlowControllerProtocol?) {
+    init(dependencies: DependencyContainer, parentFlow: AppFlowControllerProtocol?) {
         self.dependencies = dependencies
         self.parentFlow = parentFlow
         super.init(nibName: nil, bundle: nil)

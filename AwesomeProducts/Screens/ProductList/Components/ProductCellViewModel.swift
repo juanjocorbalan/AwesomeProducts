@@ -4,7 +4,7 @@ import Domain
 
 @MainActor
 final class ProductCellViewModel {
-    let id: Int
+    let id: String
 
     // MARK: - Inputs
     let removeSelected = PassthroughSubject<Void, Never>()

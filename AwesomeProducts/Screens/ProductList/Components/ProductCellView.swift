@@ -23,6 +23,7 @@ final class ProductCellView: UICollectionViewCell, StoryboardIdentifiable {
         backgroundImageView.alpha = 0.0
         productLabel.text = nil
         brandLabel.text = nil
+        accessibilityIdentifier = "collectionCellProduct"
         setupUI()
     }
     

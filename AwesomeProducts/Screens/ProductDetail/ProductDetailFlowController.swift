@@ -28,7 +28,7 @@ final class ProductsLDetailFlowController: UIViewController {
         
         let rootViewController: ProductDetailViewController = dependencies.resolve(product: product)
         
-        rootViewController.viewModel.close
+        rootViewController.viewModel?.close
             .sink(receiveValue: { [weak self] _ in
                 self?.close()
             })
