@@ -3,7 +3,7 @@ import Combine
 import Domain
 
 @MainActor
-final class ProductCellViewModel {
+final class ProductCellViewModel: NSObject {
     let id: String
 
     // MARK: - Inputs
@@ -24,14 +24,16 @@ final class ProductCellViewModel {
         self.avatar = product.thumbnail
         self.background = product.image
     }
-}
-
-extension ProductCellViewModel: Hashable {
-    static func == (lhs: ProductCellViewModel, rhs: ProductCellViewModel) -> Bool {
-        return lhs.id == rhs.id
+    
+    override var hash: Int {
+        return id.hashValue
     }
-
-    func hash(into hasher: inout Hasher) {
-        return hasher.combine(id)
+    
+    override func isEqual(_ object: Any?) -> Bool {
+        if let other = object as? ProductCellViewModel {
+            return self.id == other.id
+        } else {
+            return false
+        }
     }
 }
