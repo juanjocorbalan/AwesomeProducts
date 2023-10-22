@@ -34,7 +34,7 @@ final class ProductCellView: UICollectionViewCell, StoryboardIdentifiable {
         setupUI()
     }
     
-    func setup(with viewModel: ProductCellViewModel, imageFetcher: ImageFetcher = ImageFetcher.shared) {
+    func setup(with viewModel: ProductCellViewModel, imageFetcher: ImageFetcher?) {
     
         setupUI()
         
@@ -44,7 +44,7 @@ final class ProductCellView: UICollectionViewCell, StoryboardIdentifiable {
                 Future<UIImage?, Error> { promise in
                     Task {
                         do {
-                            let image = try await imageFetcher.fetchImage(from: url!)
+                            let image = try await imageFetcher?.fetchImage(from: url!)
                             promise(.success(image))
                         } catch {
                             promise(.failure(error))
@@ -63,7 +63,7 @@ final class ProductCellView: UICollectionViewCell, StoryboardIdentifiable {
                 Future<UIImage?, Error> { promise in
                     Task {
                         do {
-                            let image = try await imageFetcher.fetchImage(from: url!)
+                            let image = try await imageFetcher?.fetchImage(from: url!)
                             promise(.success(image))
                         } catch {
                             promise(.failure(error))

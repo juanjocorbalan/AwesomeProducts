@@ -23,6 +23,7 @@ class DependencyContainer {
     func resolve(parentFlow: ProductsListFlowControllerProtocol) -> ProductListViewController {
         let viewController = ProductListViewController.initFromStoryboard()
         viewController.viewModel = resolve(parentFlow: parentFlow)
+        viewController.imageFetcher = resolve()
         return viewController
     }
     
@@ -79,7 +80,11 @@ class DependencyContainer {
     }
     
     func resolve() -> ImageFetcher {
-        return ImageFetcher.shared
+        return ImageFetcher(cache: resolve())
+    }
+    
+    func resolve() -> ImageCacheType {
+        return ImageCache(settings: .defaultSettings)
     }
     
     func resolve() -> ZoomAnimator {

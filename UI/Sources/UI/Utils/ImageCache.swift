@@ -2,22 +2,19 @@ import Foundation
 import UIKit
 
 public protocol ImageCacheType: AnyObject {
-    func image(for key: URL) -> UIImage?
-    func insertImage(_ image: UIImage?, for key: URL)
-    func removeImage(for key: URL)
-    func removeAllImages()
-    subscript(_ key: URL) -> UIImage? { get set }
+    func image(for key: URL) async -> UIImage?
+    func insertImage(_ image: UIImage?, for key: URL) async
+    func removeImage(for key: URL) async
+    func removeAllImages() async
 }
 
-public final class ImageCache: ImageCacheType {
-    
+public final actor ImageCache: ImageCacheType {
     private lazy var imageCache: NSCache<NSString, UIImage> = {
         let cache = NSCache<NSString, UIImage>()
         cache.countLimit = settings.countLimit
         return cache
     }()
     
-    private let lock = NSLock()
     private let settings: CacheSettings
     
     public struct CacheSettings {
@@ -45,11 +42,6 @@ public final class ImageCache: ImageCacheType {
     
     public func removeAllImages() {
         imageCache.removeAllObjects()
-    }
-    
-    public subscript(_ key: URL) -> UIImage? {
-        get { return image(for: key) }
-        set { return insertImage(newValue, for: key) }
     }
 }
 

@@ -3,8 +3,8 @@ import Combine
 import UI
 
 final class ProductListViewController: UIViewController, StoryboardInitializable {
-    
     var viewModel: ProductListViewModel?
+    var imageFetcher: ImageFetcher?
     
     @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -23,7 +23,7 @@ final class ProductListViewController: UIViewController, StoryboardInitializable
     fileprivate typealias Snapshot = NSDiffableDataSourceSnapshot<Section, ProductCellViewModel>
 
     fileprivate lazy var dataSource = {
-        return DataSource(collectionView: collectionView, cellProvider: { (collectionView, indexPath, cellViewModel) -> UICollectionViewCell? in
+        return DataSource(collectionView: collectionView, cellProvider: { [ imageFetcher ] (collectionView, indexPath, cellViewModel) -> UICollectionViewCell? in
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCellView.storyboardIdentifier, for: indexPath) as? ProductCellView
                 else { return UICollectionViewCell() }
             cellViewModel.removeSelected
@@ -31,7 +31,7 @@ final class ProductListViewController: UIViewController, StoryboardInitializable
                     self?.viewModel?.productDeleted.send(cellViewModel.id)
                 })
                 .store(in: &cell.cancellables)
-            cell.setup(with: cellViewModel)
+            cell.setup(with: cellViewModel, imageFetcher: imageFetcher)
             cell.accessibilityIdentifier = "collectionCellProduct"
             return cell
         })
