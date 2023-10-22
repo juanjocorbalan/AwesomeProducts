@@ -12,8 +12,13 @@ class ProductListViewModelTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        MockURLProtocol.addStub(with: "products.json", for: ProductsAPI.url.products)
+        mockDependencyContainer.setUp()
         sut = mockDependencyContainer.resolve(parentFlow: nil)
+    }
+    
+    override func tearDown() {
+        mockDependencyContainer.tearDown()
+        super.tearDown()
     }
     
     func test_viewModel_shouldProvideTitle() {

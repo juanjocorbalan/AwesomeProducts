@@ -3,7 +3,7 @@ import Data
 import UI
 
 class DependencyContainer {
-    static let shared = DependencyContainer()
+    private(set) static var shared = DependencyContainer()
     
     init() {}
     

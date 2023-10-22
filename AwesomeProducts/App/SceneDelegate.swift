@@ -12,7 +12,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         if let _ = UIApplication.shared.delegate as? AppDelegate {
             if CommandLine.arguments.contains("-UITests") {
-                dependencies = MockDependencyContainer()
+                let mockedDependencies = MockDependencyContainer()
+                dependencies = mockedDependencies
+                mockedDependencies.setUp()
             } else {
                 dependencies = DependencyContainer.shared
             }

@@ -43,7 +43,7 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="199" height="308"/>
                                                         </imageView>
                                                         <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1f5-VM-otB">
-                                                            <rect key="frame" x="8" y="8" width="183" height="135"/>
+                                                            <rect key="frame" x="8" y="8" width="183" height="134.66666666666666"/>
                                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Bf1-P2-dXf">
                                                                 <rect key="frame" x="0.0" y="0.0" width="183" height="135"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -164,7 +164,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="muM-lV-qGY">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <rect key="frame" x="0.0" y="59" width="393" height="793"/>
                             </imageView>
                             <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fgb-Bb-sCz">
                                 <rect key="frame" x="32" y="75" width="329" height="125"/>
@@ -250,7 +250,7 @@
                             <constraint firstItem="1Eh-mG-qbz" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="-16" id="Bxt-0p-U4W"/>
                             <constraint firstItem="Fgb-Bb-sCz" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="Ogw-4P-Snr"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Fgb-Bb-sCz" secondAttribute="trailing" constant="32" id="Q7i-b8-khz"/>
-                            <constraint firstItem="muM-lV-qGY" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="R9T-qz-QgG"/>
+                            <constraint firstItem="muM-lV-qGY" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="R9T-qz-QgG"/>
                             <constraint firstItem="1Eh-mG-qbz" firstAttribute="top" secondItem="Fgb-Bb-sCz" secondAttribute="bottom" constant="32" id="RwK-z6-SHA"/>
                             <constraint firstItem="1Eh-mG-qbz" firstAttribute="trailing" secondItem="Fgb-Bb-sCz" secondAttribute="trailing" id="TKJ-Za-0t3"/>
                             <constraint firstItem="muM-lV-qGY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ZW1-ch-KWr"/>

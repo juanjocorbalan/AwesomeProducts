@@ -40,12 +40,13 @@ final class ProductListViewModel {
     private func setupBindings() {
         
         Publishers.Merge3(reload.map { _ in true }.assertNoFailure(),
-                          $errorMessage.map { _ in false }.assertNoFailure(),
-                          $products.map { _ in false }.assertNoFailure())
+                          $errorMessage.dropFirst().map { _ in false }.assertNoFailure(),
+                          productsSubject.dropFirst().map { _ in false }.assertNoFailure())
         .assign(to: \.isLoading, on: self)
         .store(in: &cancellables)
         
         productsSubject
+            .dropFirst()
             .map { $0.map { ProductCellViewModel(product: $0) } }
             .assign(to: \.products, on: self)
             .store(in: &cancellables)

@@ -1,5 +1,4 @@
 import CoreData
-import Combine
 import Data
 
 final class MockDependencyContainer: DependencyContainer {
@@ -9,18 +8,27 @@ final class MockDependencyContainer: DependencyContainer {
         return configuration
     }()
     
-    lazy var mockCoreDataStack: CoreDataStack = {
-        CoreDataStack(inMemory: true)
-    }()
+    private var selectedURLSessionConfiguration: URLSessionConfiguration = .default
 
     override func resolve() -> APIClient {
-        let client = APIClient(configuration: mockConfiguration)
-        MockURLProtocol.addStub(with: "products.json", for: ProductsAPI.url.products)
+        let client = APIClient(configuration: selectedURLSessionConfiguration)
         return client
     }
     
     override func resolve() -> CoreDataStack {
-        mockCoreDataStack
+        CoreDataStack(inMemory: true)
+    }
+}
+
+extension MockDependencyContainer {
+    func setUp() {
+        selectedURLSessionConfiguration = mockConfiguration
+        MockURLProtocol.addStub(with: "products.json", for: ProductsAPI.url.products)
+    }
+    
+    func tearDown() {
+        selectedURLSessionConfiguration = .default
+        MockURLProtocol.removeStub()
     }
 }
 
