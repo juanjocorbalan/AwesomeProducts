@@ -23,6 +23,7 @@ extension ProductDTO: DomainConvertibleEntity {
                        brand: brand,
                        category: category,
                        thumbnail: URL(string: thumbnail),
-                       image: URL(string: images.first ?? ""))
+                       image: URL(string: images.first ?? ""),
+                       isRemoved: false)
     }
 }

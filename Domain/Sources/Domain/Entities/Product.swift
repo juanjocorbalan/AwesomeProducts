@@ -8,6 +8,7 @@ public struct Product: Codable, Identifiable {
     public var category: String
     public var thumbnail: URL?
     public var image: URL?
+    public var isRemoved: Bool
     
     public init(
         id: String,
@@ -16,7 +17,8 @@ public struct Product: Codable, Identifiable {
         brand: String,
         category: String,
         thumbnail: URL?,
-        image: URL?
+        image: URL?,
+        isRemoved: Bool
     ) {
         self.id = id
         self.title = title
@@ -25,6 +27,7 @@ public struct Product: Codable, Identifiable {
         self.category = category
         self.thumbnail = thumbnail
         self.image = image
+        self.isRemoved = isRemoved
     }
 }
 
@@ -38,7 +41,8 @@ public extension Product {
         brand: "Apple",
         category: "Smartphones",
         thumbnail: URL(string: "https://i.dummyjson.com/data/products/9/thumbnail.jpg")!,
-        image: URL(string: "https://i.dummyjson.com/data/products/9/2.png")!
+        image: URL(string: "https://i.dummyjson.com/data/products/9/2.png")!,
+        isRemoved: false
     )
     
     static let mock2 = Product(
@@ -48,7 +52,8 @@ public extension Product {
         brand: "Apple",
         category: "Smartphones",
         thumbnail: URL(string: "https://i.dummyjson.com/data/products/3/thumbnail.jpg")!,
-        image: URL(string: "https://i.dummyjson.com/data/products/3/2.png")!
+        image: URL(string: "https://i.dummyjson.com/data/products/3/2.png")!,
+        isRemoved: false
     )
 }
 #endif

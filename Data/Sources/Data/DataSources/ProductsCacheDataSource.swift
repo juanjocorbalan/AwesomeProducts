@@ -6,6 +6,7 @@ public protocol ProductsCacheDataSourceType {
     func createOrUpdate(product: Product) async throws -> Void
     func updateProduct(id: String, with values: [String : Any]) async throws -> Void
     func deleteProduct(id: String) async throws -> Void
+    func restoreAllProducts() async throws -> Void
 }
 
 public class ProductsCacheDataSource<CacheClient>: ProductsCacheDataSourceType where CacheClient: CacheClientType, CacheClient.T == Product {
@@ -30,5 +31,11 @@ public class ProductsCacheDataSource<CacheClient>: ProductsCacheDataSourceType w
     
     public func deleteProduct(id: String) async throws -> Void {
         try await cacheClient.delete(where: ProductCacheKeys.id, equals: id)
+    }
+    
+    public func restoreAllProducts() async throws -> Void {
+        try await cacheClient.update(where: ProductCacheKeys.isRemoved, 
+                                     equals: true,
+                                     with: [ProductCacheKeys.isRemoved: false])
     }
 }

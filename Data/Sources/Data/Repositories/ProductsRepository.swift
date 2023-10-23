@@ -23,4 +23,12 @@ public final class ProductsRepository: ProductsRepositoryType {
     public func deleteProductBy(id: String) async throws -> Void {
         try await cache.updateProduct(id: id, with: [ProductCacheKeys.isRemoved : true])
     }
+    
+    public func getDeletedProducts() async throws -> [Product] {
+        return try await cache.getProducts(where: ProductCacheKeys.isRemoved, equals: true)
+    }
+    
+    public func restoreProductBy(id: String) async throws {
+        try await cache.updateProduct(id: id, with: [ProductCacheKeys.isRemoved : false])
+    }
 }

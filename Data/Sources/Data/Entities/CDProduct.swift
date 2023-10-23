@@ -18,7 +18,8 @@ extension CDProduct: ManagedToDomainConvertibleEntity {
                        brand: brand ?? "",
                        category: category ?? "",
                        thumbnail: URL(string: thumbnail ?? ""),
-                       image: URL(string: image ?? ""))
+                       image: URL(string: image ?? ""),
+                       isRemoved: isRemoved)
     }
 }
 
@@ -32,6 +33,7 @@ extension Product: DomainToManagedConvertibleEntity {
         product.category = category
         product.thumbnail = thumbnail?.absoluteString
         product.image = image?.absoluteString
+        product.isRemoved = isRemoved
         return product
     }
 }

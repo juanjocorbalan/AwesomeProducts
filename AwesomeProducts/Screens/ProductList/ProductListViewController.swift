@@ -89,25 +89,17 @@ final class ProductListViewController: UIViewController, StoryboardInitializable
     
     private func setupBindings() {
         
-        viewModel?.$title
-            .map { $0 }
-            .sink(receiveValue: { [weak self] title in
-                self?.title = title
-                self?.parent?.title = title
-            })
-            .store(in: &cancellables)
-        
+        title = viewModel?.title
+        parent?.navigationItem.title = viewModel?.title
+
         viewModel?.$products
             .handleEvents(receiveOutput: { [weak self] _ in
-                DispatchQueue.main.async {
-                    self?.refreshControl.endRefreshing()
-                }
+                self?.refreshControl.endRefreshing()
             })
             .removeDuplicates()
             .receive(on: RunLoop.main)
             .sink(receiveValue: { [weak self] products in
-                guard let strongSelf = self else { return }
-                strongSelf.createSnapshot(with: products)
+                self?.createSnapshot(with: products)
             })
             .store(in: &cancellables)
 

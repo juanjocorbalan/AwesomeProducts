@@ -11,18 +11,20 @@ final class ProductCellViewModel: NSObject {
 
     // MARK: - Outputs
     @Published private(set) var name: String
-    @Published private(set) var city: String
+    @Published private(set) var brand: String
     @Published private(set) var avatar: URL?
     @Published private(set) var background: URL?
+    @Published private(set) var actionButtonImage: String
 
     // MARK: - Init
 
     init(product: Product) {
         self.id = product.id
         self.name = product.title
-        self.city =  product.brand
+        self.brand =  product.brand
         self.avatar = product.thumbnail
         self.background = product.image
+        self.actionButtonImage = product.isRemoved ? "trash.slash" : "trash"
     }
     
     override var hash: Int {

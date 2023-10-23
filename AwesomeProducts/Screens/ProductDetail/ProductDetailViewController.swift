@@ -1,10 +1,7 @@
 import UIKit
-import Combine
 import UI
 
 final class ProductDetailViewController: UIViewController, StoryboardInitializable {
-    private var cancellables = Set<AnyCancellable>()
-    
     var viewModel: ProductDetailViewModel?
     var imageFetcher: ImageFetcher?
     
@@ -57,66 +54,28 @@ final class ProductDetailViewController: UIViewController, StoryboardInitializab
     }
     
     private func setupBindings() {
-        viewModel?.$thumbnail
-            .compactMap { $0 }
-            .flatMap { [ weak self ] url in
-                Future<UIImage?, Error> { promise in
-                    Task {
-                        do {
-                            let image = try await self?.imageFetcher?.fetchImage(from: url)
-                            promise(.success(image))
-                        } catch {
-                            promise(.failure(error))
-                        }
-                    }
-                }
-            }.sink(receiveCompletion: { _ in }, receiveValue: { [weak self] image in
-                guard let strongSelf = self else { return }
-                strongSelf.showImage(image: image, in: strongSelf.thumbnailImageView)
-            })
-            .store(in: &cancellables)
+        if let thubnailURL = viewModel?.thumbnail {
+            Task {
+                let image = try await imageFetcher?.fetchImage(from: thubnailURL)
+                showImage(image: image, in: thumbnailImageView)
+            }
+        }
+
+        if let backgroundURL = viewModel?.background {
+            Task {
+                let image = try await imageFetcher?.fetchImage(from: backgroundURL)
+                showImage(image: image, in: backgroundImageView)
+            }
+        }
         
-        viewModel?.$background
-            .compactMap { $0 }
-            .flatMap { [ weak self ] url in
-                Future<UIImage?, Error> { promise in
-                    Task {
-                        do {
-                            let image = try await self?.imageFetcher?.fetchImage(from: url)
-                            promise(.success(image))
-                        } catch {
-                            promise(.failure(error))
-                        }
-                    }
-                }
-            }.sink(receiveCompletion: { _ in }, receiveValue: { [weak self] image in
-                guard let strongSelf = self else { return }
-                strongSelf.showImage(image: image, in: strongSelf.backgroundImageView)
-            })
-            .store(in: &cancellables)
+        title = viewModel?.name
+        parent?.title = viewModel?.name
         
-        viewModel?.$name
-            .map { $0 }
-            .sink(receiveValue: { [ weak self] title in
-                self?.parent?.navigationItem.title = title
-                self?.navigationItem.title = title
-            })
-            .store(in: &cancellables)
+        brandLabel.text = viewModel?.brand
         
-        viewModel?.$brand
-            .map { $0 }
-            .assign(to: \.text, on: brandLabel)
-            .store(in: &cancellables)
+        categoryLabel.text = viewModel?.category
         
-        viewModel?.$category
-            .map { $0 }
-            .assign(to: \.text, on: categoryLabel)
-            .store(in: &cancellables)
-        
-        viewModel?.$text
-            .map { $0 }
-            .assign(to: \.text, on: descriptionTextView)
-            .store(in: &cancellables)
+        descriptionTextView.text = viewModel?.text
     }
     
     private func showImage(image: UIImage?, in imageView: UIImageView) {

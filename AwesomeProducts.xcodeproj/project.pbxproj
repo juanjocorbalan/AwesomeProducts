@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DF02B0FA2AE69A6800156278 /* MainTabFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF02B0F92AE69A6800156278 /* MainTabFlowController.swift */; };
 		DF0302A62AE4143800F91EB8 /* AwesomeProductsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0302A52AE4143800F91EB8 /* AwesomeProductsUITests.swift */; };
 		DF0302AB2AE4146600F91EB8 /* TestingAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0302A92AE4146600F91EB8 /* TestingAppDelegate.swift */; };
 		DF0302B62AE4155300F91EB8 /* ProductListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0302B52AE4155300F91EB8 /* ProductListViewModelTests.swift */; };
@@ -29,8 +30,8 @@
 		DF2A573A2AE3FE48003E3579 /* ProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2A57312AE3FE48003E3579 /* ProductListViewController.swift */; };
 		DF2A573B2AE3FE48003E3579 /* ProductDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2A57332AE3FE48003E3579 /* ProductDetailViewModel.swift */; };
 		DF2A573C2AE3FE48003E3579 /* ProductDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2A57342AE3FE48003E3579 /* ProductDetailViewController.swift */; };
-		DF2A573D2AE3FE48003E3579 /* ProductDetailFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2A57352AE3FE48003E3579 /* ProductDetailFlowController.swift */; };
 		DF571CBD2AE5BC6200FA4C0C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF571CBC2AE5BC6100FA4C0C /* Assets.xcassets */; };
+		DFDC698A2AE6C477006BE1ED /* ModalProductDetailFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDC69892AE6C477006BE1ED /* ModalProductDetailFlowController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DF02B0F92AE69A6800156278 /* MainTabFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabFlowController.swift; sourceTree = "<group>"; };
 		DF0302A52AE4143800F91EB8 /* AwesomeProductsUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AwesomeProductsUITests.swift; sourceTree = "<group>"; };
 		DF0302A92AE4146600F91EB8 /* TestingAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingAppDelegate.swift; sourceTree = "<group>"; };
 		DF0302B52AE4155300F91EB8 /* ProductListViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductListViewModelTests.swift; sourceTree = "<group>"; };
@@ -73,12 +75,12 @@
 		DF2A57312AE3FE48003E3579 /* ProductListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductListViewController.swift; sourceTree = "<group>"; };
 		DF2A57332AE3FE48003E3579 /* ProductDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductDetailViewModel.swift; sourceTree = "<group>"; };
 		DF2A57342AE3FE48003E3579 /* ProductDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductDetailViewController.swift; sourceTree = "<group>"; };
-		DF2A57352AE3FE48003E3579 /* ProductDetailFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductDetailFlowController.swift; sourceTree = "<group>"; };
 		DF571CBC2AE5BC6100FA4C0C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DF6483892AE4003A00FC59BB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DF828E472AE4132300A28A6B /* UI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = UI; sourceTree = "<group>"; };
 		DF828E482AE4132300A28A6B /* Data */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Data; sourceTree = "<group>"; };
 		DF828E492AE4132300A28A6B /* Domain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Domain; sourceTree = "<group>"; };
+		DFDC69892AE6C477006BE1ED /* ModalProductDetailFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalProductDetailFlowController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DF02B0F82AE69A4400156278 /* MainTab */ = {
+			isa = PBXGroup;
+			children = (
+				DF02B0F92AE69A6800156278 /* MainTabFlowController.swift */,
+			);
+			path = MainTab;
+			sourceTree = "<group>";
+		};
 		DF0302A72AE4144800F91EB8 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -219,6 +229,7 @@
 		DF2A572A2AE3FE48003E3579 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				DF02B0F82AE69A4400156278 /* MainTab */,
 				DF2A572B2AE3FE48003E3579 /* ProductList */,
 				DF2A57322AE3FE48003E3579 /* ProductDetail */,
 			);
@@ -250,7 +261,7 @@
 			children = (
 				DF2A57332AE3FE48003E3579 /* ProductDetailViewModel.swift */,
 				DF2A57342AE3FE48003E3579 /* ProductDetailViewController.swift */,
-				DF2A57352AE3FE48003E3579 /* ProductDetailFlowController.swift */,
+				DFDC69892AE6C477006BE1ED /* ModalProductDetailFlowController.swift */,
 			);
 			path = ProductDetail;
 			sourceTree = "<group>";
@@ -399,7 +410,7 @@
 				DF2A571A2AE3FCEA003E3579 /* DependencyContainer.swift in Sources */,
 				DF2A57392AE3FE48003E3579 /* ProductCellView.swift in Sources */,
 				DF2A573A2AE3FE48003E3579 /* ProductListViewController.swift in Sources */,
-				DF2A573D2AE3FE48003E3579 /* ProductDetailFlowController.swift in Sources */,
+				DFDC698A2AE6C477006BE1ED /* ModalProductDetailFlowController.swift in Sources */,
 				DF0302C92AE4425C00F91EB8 /* MockDependencyContainer.swift in Sources */,
 				DF2A56BB2AE3F3F1003E3579 /* AppDelegate.swift in Sources */,
 				DF2A57382AE3FE48003E3579 /* ProductCellViewModel.swift in Sources */,
@@ -410,6 +421,7 @@
 				DF0302B82AE416FC00F91EB8 /* main.swift in Sources */,
 				DF2A571B2AE3FCEA003E3579 /* AppFlowController.swift in Sources */,
 				DF2A56BD2AE3F3F1003E3579 /* SceneDelegate.swift in Sources */,
+				DF02B0FA2AE69A6800156278 /* MainTabFlowController.swift in Sources */,
 				DF2A57192AE3FCEA003E3579 /* FlowController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

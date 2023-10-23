@@ -6,8 +6,9 @@ import Domain
 final class ProductListViewModel {
     private var cancellables = Set<AnyCancellable>()
     private var productsSubject = CurrentValueSubject<[Product], Never>([])
-    private let getProductsUseCase: GetProductsUseCase
-    private let deleteProductUseCase: DeleteProductUseCase
+    private let getProductsUseCase: GetProductsUseCaseType
+    private let removeFromListUseCase: RemoveFromListUseCaseType
+    private let type: ProductsListType
     weak var flowController: ProductsListFlowControllerProtocol?
     
     // MARK: - Inputs
@@ -18,20 +19,23 @@ final class ProductListViewModel {
     
     // MARK: - Outputs
     
-    @Published private(set) var title = "Awesome Products"
+    @Published private(set) var title: String
     @Published private(set) var products: [ProductCellViewModel] = []
     @Published private(set) var errorMessage: String? = nil
     @Published private(set) var isLoading = true
 
     // MARK: - Init
 
-    init(getProductsUseCase: GetProductsUseCase,
-         deleteProductUseCase: DeleteProductUseCase,
+    init(type: ProductsListType,
+         getProductsUseCase: GetProductsUseCaseType,
+         removeFromListUseCase: RemoveFromListUseCaseType,
          flowController: ProductsListFlowControllerProtocol?
     ) {
         self.getProductsUseCase = getProductsUseCase
-        self.deleteProductUseCase = deleteProductUseCase
+        self.removeFromListUseCase = removeFromListUseCase
         self.flowController = flowController
+        self.type = type
+        self.title = type.rawValue
         setupBindings()
     }
     
@@ -80,7 +84,7 @@ final class ProductListViewModel {
                 Future { promise in
                     Task {
                         do {
-                            try await self.deleteProductUseCase.execute(with: product)
+                            try await self.removeFromListUseCase.execute(with: product)
                             promise(.success(product))
                         } catch {
                             promise(.failure(error))

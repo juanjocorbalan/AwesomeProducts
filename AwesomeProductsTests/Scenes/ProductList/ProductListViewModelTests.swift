@@ -13,7 +13,7 @@ class ProductListViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
         mockDependencyContainer.setUp()
-        sut = mockDependencyContainer.resolve(parentFlow: nil)
+        sut = mockDependencyContainer.resolve(type: .active, parentFlow: nil)
     }
     
     override func tearDown() {

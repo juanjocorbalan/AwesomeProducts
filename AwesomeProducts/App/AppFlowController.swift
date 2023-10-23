@@ -2,7 +2,7 @@ import UIKit
 
 protocol AppFlowControllerProtocol: FlowControllerProtocol {}
 
-final class AppFlowController: UINavigationController {
+final class AppFlowController: UIViewController {
     let dependencies: DependencyContainer
     let parentFlow: FlowControllerProtocol?
     
@@ -15,8 +15,8 @@ final class AppFlowController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let rootFlow: ProductsListFlowControllerProtocol = dependencies.resolve(parentFlow: self)
-        viewControllers = [rootFlow]
+        let rootFlow: MainTabFlowControllerProtocol = dependencies.resolve(parentFlow: self)
+        addChildViewController(rootFlow)
     }
     
     required init?(coder: NSCoder) {

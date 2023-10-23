@@ -11,26 +11,33 @@ class DependencyContainer {
         return AppFlowController(dependencies: self)
     }
     
-    func resolve(parentFlow: AppFlowControllerProtocol?) -> ProductsListFlowControllerProtocol {
-        return ProductsListFlowController(dependencies: self, parentFlow: parentFlow)
+    func resolve(parentFlow: AppFlowControllerProtocol?) -> MainTabFlowControllerProtocol {
+        return MainTabFlowController(dependencies: self, parentFlow: parentFlow)
+    }
+
+    func resolve(type: ProductsListType, parentFlow: AppFlowControllerProtocol?) -> ProductsListFlowControllerProtocol {
+        return ProductsListFlowController(type: type, dependencies: self, parentFlow: parentFlow)
     }
     
-    func resolve(product: Product, parentFlow: ProductsListFlowControllerProtocol?) -> ProductDetailFlowControllerProtocol {
-        ProductsLDetailFlowController(product: product, dependencies: self, parentFlow: parentFlow)
+    func resolve(product: Product, parentFlow: ProductsListFlowControllerProtocol?) -> ModalProductDetailFlowControllerProtocol {
+        ModalProductsLDetailFlowController(product: product, dependencies: self, parentFlow: parentFlow)
     }
     
     @MainActor
-    func resolve(parentFlow: ProductsListFlowControllerProtocol) -> ProductListViewController {
+    func resolve(type: ProductsListType,
+                 parentFlow: ProductsListFlowControllerProtocol) -> ProductListViewController {
         let viewController = ProductListViewController.initFromStoryboard()
-        viewController.viewModel = resolve(parentFlow: parentFlow)
+        viewController.viewModel = resolve(type: type, parentFlow: parentFlow)
         viewController.imageFetcher = resolve()
         return viewController
     }
     
     @MainActor
-    func resolve(parentFlow: ProductsListFlowControllerProtocol?) -> ProductListViewModel {
-        return ProductListViewModel(getProductsUseCase: resolve(),
-                                    deleteProductUseCase: resolve(),
+    func resolve(type: ProductsListType,
+                 parentFlow: ProductsListFlowControllerProtocol?) -> ProductListViewModel {
+        return ProductListViewModel(type: type,
+                                    getProductsUseCase: resolve(type: type),
+                                    removeFromListUseCase: resolve(type: type),
                                     flowController: parentFlow)
     }
     
@@ -47,12 +54,22 @@ class DependencyContainer {
         return ProductDetailViewModel(product: product)
     }
     
-    func resolve() -> GetProductsUseCase {
-        return GetProductsUseCase(repository: resolve())
+    func resolve(type: ProductsListType) -> GetProductsUseCaseType {
+        switch type {
+        case .active:
+            return GetProductsUseCase(repository: resolve())
+        case .deleted:
+            return GetDeletedProductsUseCase(repository: resolve())
+        }
     }
     
-    func resolve() -> DeleteProductUseCase {
-        return DeleteProductUseCase(repository: resolve())
+    func resolve(type: ProductsListType) -> RemoveFromListUseCaseType {
+        switch type {
+        case .active:
+            return DeleteProductUseCase(repository: resolve())
+        case .deleted:
+            return RestoreProductUseCase(repository: resolve())
+        }
     }
     
     func resolve() -> ProductsRepositoryType {

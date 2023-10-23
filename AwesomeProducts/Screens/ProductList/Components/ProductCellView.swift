@@ -38,57 +38,27 @@ final class ProductCellView: UICollectionViewCell, StoryboardIdentifiable {
     
         setupUI()
         
-        viewModel.$avatar
-            .filter { $0 != nil }
-            .flatMap { url in
-                Future<UIImage?, Error> { promise in
-                    Task {
-                        do {
-                            let image = try await imageFetcher?.fetchImage(from: url!)
-                            promise(.success(image))
-                        } catch {
-                            promise(.failure(error))
-                        }
-                    }
-                }
-            }.sink(receiveCompletion: { _ in }, receiveValue: { [weak self] image in
-                guard let strongSelf = self else { return }
-                strongSelf.showImage(image: image, in: strongSelf.thumbnailImageview)
-            })
-            .store(in: &cancellables)
+        productLabel.text = viewModel.name
+        brandLabel.text = viewModel.brand
 
-        viewModel.$background
-            .filter { $0 != nil }
-            .flatMap { url in
-                Future<UIImage?, Error> { promise in
-                    Task {
-                        do {
-                            let image = try await imageFetcher?.fetchImage(from: url!)
-                            promise(.success(image))
-                        } catch {
-                            promise(.failure(error))
-                        }
-                    }
-                }
-            }.sink(receiveCompletion: { _ in }, receiveValue: { [weak self] image in
-                guard let strongSelf = self else { return }
-                strongSelf.showImage(image: image, in: strongSelf.backgroundImageView)
-            })
-            .store(in: &cancellables)
-
-        viewModel.$name
-            .map { $0 }
-            .assign(to: \.text, on: productLabel)
-            .store(in: &cancellables)
-        
-        viewModel.$city
-            .map { $0 }
-            .assign(to: \.text, on: brandLabel)
-            .store(in: &cancellables)
-    
+        removeButton.setImage(UIImage(systemName: viewModel.actionButtonImage), for: .normal)
         removeButton.addAction(UIAction() { _ in
             viewModel.removeSelected.send(())
         }, for: .touchUpInside)
+
+        if let avatarURL = viewModel.avatar {
+            Task {
+                let image = try await imageFetcher?.fetchImage(from: avatarURL)
+                showImage(image: image, in: thumbnailImageview)
+            }
+        }
+
+        if let backgroundURL = viewModel.background {
+            Task {
+                let image = try await imageFetcher?.fetchImage(from: backgroundURL)
+                showImage(image: image, in: backgroundImageView)
+            }
+        }
     }
     
     private func setupUI() {

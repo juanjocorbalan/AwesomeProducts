@@ -1,10 +1,6 @@
 import Foundation
 
-public protocol GetProductsUseCaseType {
-    func execute() async throws -> [Product]
-}
-
-public class GetProductsUseCase: GetProductsUseCaseType {
+public class GetDeletedProductsUseCase: GetProductsUseCaseType {
     private let repository: ProductsRepositoryType
     
     public init(repository: ProductsRepositoryType) {
@@ -12,6 +8,6 @@ public class GetProductsUseCase: GetProductsUseCaseType {
     }
     
     public func execute() async throws -> [Product] {
-        try await repository.getProducts()
+        try await repository.getDeletedProducts()
     }
 }
