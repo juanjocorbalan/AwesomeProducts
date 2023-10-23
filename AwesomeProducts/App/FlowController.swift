@@ -54,25 +54,3 @@ extension FlowControllerProtocol {
         close(animated: true)
     }
 }
-
-extension FlowControllerProtocol {
-    init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-//class FlowController: UIViewController {
-//    var cancellables = Set<AnyCancellable>()
-//    var dependencies: DependencyContainer
-//    weak var parentFlow: FlowControllerProtocol?
-//    
-//    init(dependencies: DependencyContainer, parentFlow: FlowControllerProtocol?) {
-//        self.parentFlow = parentFlow
-//        self.dependencies = dependencies
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//}

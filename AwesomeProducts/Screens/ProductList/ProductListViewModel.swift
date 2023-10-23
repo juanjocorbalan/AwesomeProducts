@@ -98,13 +98,14 @@ final class ProductListViewModel {
                 }
             }, receiveValue: { [weak self] product in
                 self?.productsSubject.value.removeAll(where: { $0.id == product.id} )
+                self?.flowController?.deleted(product: product)
             })
             .store(in: &cancellables)
         
         productSelected
             .compactMap { selectedId in return self.productsSubject.value.first(where: { $0.id == selectedId }) }
             .sink(receiveValue: { [weak self] product in
-                self?.flowController?.showProduct(product)
+                self?.flowController?.show(product: product)
             })
             .store(in: &cancellables)
     }

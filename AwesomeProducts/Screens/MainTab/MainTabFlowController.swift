@@ -2,11 +2,13 @@ import UIKit
 import Domain
 import UI
 
-protocol MainTabFlowControllerProtocol: FlowControllerProtocol { }
+protocol MainTabFlowControllerProtocol: FlowControllerProtocol { 
+    func deleted(product: Product, from type: ProductsListType)
+}
 
 class MainTabFlowController: UIViewController {
-    private var productsFlowController: ProductsListFlowControllerProtocol!
-    private var deletedFlowController: ProductsListFlowControllerProtocol!
+    private var productsFlowController: ProductsListFlowController!
+    private var deletedFlowController: ProductsListFlowController!
     private var tabController: UITabBarController!
     
     let dependencies: DependencyContainer
@@ -27,12 +29,11 @@ class MainTabFlowController: UIViewController {
         
         tabController = UITabBarController()
     
-        let flow = parentFlow as? AppFlowControllerProtocol
-        productsFlowController = dependencies.resolve(type: .active, parentFlow: flow)
+        productsFlowController = dependencies.resolve(type: .active, parentFlow: self)
         productsFlowController.tabBarItem = UITabBarItem(title: "Products",
                                                          image: UIImage(systemName: "shippingbox"),
                                                          tag: 1)
-        deletedFlowController = dependencies.resolve(type: .deleted, parentFlow: flow)
+        deletedFlowController = dependencies.resolve(type: .deleted, parentFlow: self)
         deletedFlowController.tabBarItem = UITabBarItem(title: "Deleted",
                                                         image: UIImage(systemName: "trash.slash"),
                                                         tag: 2)
@@ -42,4 +43,13 @@ class MainTabFlowController: UIViewController {
     }
 }
 
-extension MainTabFlowController: MainTabFlowControllerProtocol { }
+extension MainTabFlowController: MainTabFlowControllerProtocol { 
+    func deleted(product: Product, from type: ProductsListType) {
+        switch type {
+        case .active:
+            deletedFlowController.rootViewController?.viewModel?.reload.send(())
+        case .deleted:
+            productsFlowController.rootViewController?.viewModel?.reload.send(())
+        }
+    }
+}

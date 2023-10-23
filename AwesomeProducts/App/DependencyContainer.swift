@@ -15,7 +15,7 @@ class DependencyContainer {
         return MainTabFlowController(dependencies: self, parentFlow: parentFlow)
     }
 
-    func resolve(type: ProductsListType, parentFlow: AppFlowControllerProtocol?) -> ProductsListFlowControllerProtocol {
+    func resolve(type: ProductsListType, parentFlow: MainTabFlowControllerProtocol?) -> ProductsListFlowController {
         return ProductsListFlowController(type: type, dependencies: self, parentFlow: parentFlow)
     }
     

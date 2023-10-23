@@ -8,18 +8,19 @@ enum ProductsListType: String{
 }
 
 protocol ProductsListFlowControllerProtocol: FlowControllerProtocol {
-    func showProduct(_ product: Product) -> Void
+    func show(product: Product) -> Void
+    func deleted(product: Product) -> Void
 }
 
 final class ProductsListFlowController: UIViewController {
     
     private lazy var animator: ZoomAnimator = dependencies.resolve()
-    private var rootViewController: ProductListViewController?
+    private (set) var rootViewController: ProductListViewController?
     let dependencies: DependencyContainer
     let parentFlow: FlowControllerProtocol?
     let type: ProductsListType
 
-    init(type: ProductsListType, dependencies: DependencyContainer, parentFlow: AppFlowControllerProtocol?) {
+    init(type: ProductsListType, dependencies: DependencyContainer, parentFlow: MainTabFlowControllerProtocol?) {
         self.dependencies = dependencies
         self.parentFlow = parentFlow
         self.type = type
@@ -35,13 +36,12 @@ final class ProductsListFlowController: UIViewController {
         
         let rootViewController: ProductListViewController = dependencies.resolve(type: type, parentFlow: self)
         self.rootViewController = rootViewController
-        self.rootViewController?.hidesBottomBarWhenPushed = true
         addChildViewController(rootViewController)
     }
 }
 
 extension ProductsListFlowController: ProductsListFlowControllerProtocol {
-    func showProduct(_ product: Product) -> Void {
+    func show(product: Product) -> Void {
         switch type {
         case .active:
             let flow: ModalProductDetailFlowControllerProtocol = dependencies.resolve(product: product, parentFlow: self)
@@ -53,5 +53,9 @@ extension ProductsListFlowController: ProductsListFlowControllerProtocol {
             detailVC.hidesBottomBarWhenPushed = true
             push(screen: detailVC)
         }
+    }
+    
+    func deleted(product: Product) {
+        (parentFlow as? MainTabFlowController)?.deleted(product: product, from: type)
     }
 }
