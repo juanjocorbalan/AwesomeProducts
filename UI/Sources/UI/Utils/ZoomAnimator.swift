@@ -14,10 +14,9 @@ public final class ZoomAnimator: NSObject, UIViewControllerAnimatedTransitioning
     
     public func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         
-        if let fromNavVC = transitionContext.viewController(forKey: .from) as? UINavigationController,
-           let fromVC = fromNavVC.viewControllers.compactMap({ $0 as? Zoomable }).last ??
-            fromNavVC.viewControllers.compactMap({ $0.children.first as? Zoomable }).last {
-            originFrame = fromVC.zoomableViewFrame
+        if let fromVC = transitionContext.viewController(forKey: .from),
+           let zoomable = fromVC.topVisibleViewController as? Zoomable {
+            originFrame = zoomable.zoomableViewFrame
         }
         
         let containerView = transitionContext.containerView
