@@ -14,8 +14,8 @@ final class ProductListViewModel {
     // MARK: - Inputs
     
     let productSelected = PassthroughSubject<String, Never>()
-    let productDeleted = PassthroughSubject<String, Error>()
-    let reload = PassthroughSubject<Void, Error>()
+    let productDeleted = PassthroughSubject<String, Never>()
+    let reload = PassthroughSubject<Void, Never>()
     
     // MARK: - Outputs
     
@@ -56,49 +56,32 @@ final class ProductListViewModel {
             .store(in: &cancellables)
 
         reload
-            .map { _ in
-                Future { promise in
-                    Task {
-                        do {
-                            let products = try await self.getProductsUseCase.execute()
-                            promise(.success(products))
-                        } catch {
-                            promise(.failure(error))
-                        }
+            .sink(receiveValue: { [ weak self ] _ in
+                guard let strongSelf = self else { return }
+                Task {
+                    do {
+                        let products = try await strongSelf.getProductsUseCase.execute()
+                        strongSelf.productsSubject.send(products)
+                    } catch {
+                        strongSelf.errorMessage = error.localizedDescription
                     }
                 }
-            }
-            .switchToLatest()
-            .sink(receiveCompletion: { [weak self] completion in
-                if case .failure(let error) = completion {
-                    self?.errorMessage = error.localizedDescription
-                }
-            }, receiveValue: { [weak self] products in
-                self?.productsSubject.send(products)
             })
             .store(in: &cancellables)
         
         productDeleted
             .compactMap { selectedId in return self.productsSubject.value.first(where: { $0.id == selectedId }) }
-            .flatMap { product in
-                Future { promise in
-                    Task {
-                        do {
-                            try await self.removeFromListUseCase.execute(with: product)
-                            promise(.success(product))
-                        } catch {
-                            promise(.failure(error))
-                        }
+            .sink(receiveValue: { [weak self] product in
+                guard let strongSelf = self else { return }
+                Task {
+                    do {
+                        try await strongSelf.removeFromListUseCase.execute(with: product)
+                        strongSelf.productsSubject.value.removeAll(where: { $0.id == product.id} )
+                        strongSelf.flowController?.deleted(product: product)
+                    } catch {
+                        strongSelf.errorMessage = error.localizedDescription
                     }
                 }
-            }
-            .sink(receiveCompletion: { [weak self] completion in
-                if case .failure(let error) = completion {
-                    self?.errorMessage = error.localizedDescription
-                }
-            }, receiveValue: { [weak self] product in
-                self?.productsSubject.value.removeAll(where: { $0.id == product.id} )
-                self?.flowController?.deleted(product: product)
             })
             .store(in: &cancellables)
         
