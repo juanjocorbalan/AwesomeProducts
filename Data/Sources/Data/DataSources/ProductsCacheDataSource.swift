@@ -9,7 +9,7 @@ public protocol ProductsCacheDataSourceType {
     func restoreAllProducts() async throws -> Void
 }
 
-public class ProductsCacheDataSource<CacheClient>: ProductsCacheDataSourceType where CacheClient: CacheClientType, CacheClient.T == Product {
+public class ProductsCacheDataSource<CacheClient: CacheClientType>: ProductsCacheDataSourceType where CacheClient.T == Product {
     
     private let cacheClient: CacheClient
     

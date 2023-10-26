@@ -9,5 +9,10 @@
         <attribute name="text" attributeType="String"/>
         <attribute name="thumbnail" attributeType="String"/>
         <attribute name="title" attributeType="String"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
 </model>

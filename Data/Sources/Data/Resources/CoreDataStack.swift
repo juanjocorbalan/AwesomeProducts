@@ -1,16 +1,22 @@
 import Foundation
 import CoreData
 
-
 public class CoreDataStack {
     public static let shared: CoreDataStack = CoreDataStack()
     
-    public let container: NSPersistentContainer
+    private let container: NSPersistentContainer
     
     public var viewContext: NSManagedObjectContext {
         container.viewContext
     }
     
+    public lazy var backgroundContext: NSManagedObjectContext = {
+        let context = container.newBackgroundContext()
+        context.automaticallyMergesChangesFromParent = true
+        context.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
+        return context
+    }()
+
     public init(modelName: String = "AwesomeProducts", inMemory: Bool = false) {
         do {
             self.container = try CoreDataStack.container(withModel: modelName)
@@ -29,6 +35,9 @@ public class CoreDataStack {
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
+
+            self.container.viewContext.automaticallyMergesChangesFromParent = true
+            self.container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
         })
     }
     

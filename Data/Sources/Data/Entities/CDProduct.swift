@@ -1,7 +1,7 @@
 import Domain
 import CoreData
 
-extension CDProduct: ManagedToDomainConvertibleEntity {
+extension CDProduct: ManagedToDomainConvertible {
     public func update(with object: Product) {
         title = object.title
         text = object.description
@@ -23,7 +23,7 @@ extension CDProduct: ManagedToDomainConvertibleEntity {
     }
 }
 
-extension Product: DomainToManagedConvertibleEntity {
+extension Product: DomainToManagedConvertible {
     public func toManaged(in context: NSManagedObjectContext) -> CDProduct {
         let product = CDProduct(context: context)
         product.id = id

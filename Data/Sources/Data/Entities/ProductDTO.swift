@@ -15,7 +15,7 @@ struct ProductDTO: Codable {
     let images: [String]
 }
 
-extension ProductDTO: DomainConvertibleEntity {
+extension ProductDTO: ToDomainConvertible {
     func toDomain() -> Product {
         return Product(id: String(id),
                        title: title,
