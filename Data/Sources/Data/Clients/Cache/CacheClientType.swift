@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol CacheClientType {
+public protocol CacheClientType<T> {
     associatedtype T: DomainToManagedConvertible
     
     func getAll() async throws -> [T]
