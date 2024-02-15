@@ -44,7 +44,7 @@ public class CoreDataClient<T: DomainToManagedConvertible>: CacheClientType {
         try await context.perform { [ weak self ] in
             guard let self = self else { throw CacheError.fetchError }
             let request = T.ManagedEntity.fetchRequest() as! NSFetchRequest<T.ManagedEntity>
-            request.predicate = NSPredicate(format: "id == %@", element.id as! CVarArg)
+            request.predicate = NSPredicate(format: "id == %@", argumentArray: [element.id])
             
             do {
                 if let object = try context.fetch(request).first {
