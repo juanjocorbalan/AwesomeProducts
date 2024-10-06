@@ -2,11 +2,12 @@ import Domain
 import Data
 import UI
 
+@MainActor
 class DependencyContainer {
-    private(set) static var shared = DependencyContainer()
-    
+    static let shared = DependencyContainer()
+
     init() {}
-    
+
     func resolve() -> AppFlowControllerProtocol {
         return AppFlowController(dependencies: self)
     }
@@ -23,7 +24,6 @@ class DependencyContainer {
         ModalProductsLDetailFlowController(product: product, dependencies: self, parentFlow: parentFlow)
     }
     
-    @MainActor
     func resolve(type: ProductsListType,
                  parentFlow: ProductsListFlowControllerProtocol) -> ProductListViewController {
         let viewController = ProductListViewController.initFromStoryboard()
@@ -32,7 +32,6 @@ class DependencyContainer {
         return viewController
     }
     
-    @MainActor
     func resolve(type: ProductsListType,
                  parentFlow: ProductsListFlowControllerProtocol?) -> ProductListViewModel {
         return ProductListViewModel(type: type,
@@ -41,7 +40,6 @@ class DependencyContainer {
                                     flowController: parentFlow)
     }
     
-    @MainActor
     func resolve(product: Product) -> ProductDetailViewController {
         let viewController = ProductDetailViewController.initFromStoryboard()
         viewController.viewModel = resolve(product: product)
@@ -49,7 +47,6 @@ class DependencyContainer {
         return viewController
     }
     
-    @MainActor
     func resolve(product: Product) -> ProductDetailViewModel {
         return ProductDetailViewModel(product: product)
     }
@@ -93,11 +90,12 @@ class DependencyContainer {
     }
     
     func resolve() -> CoreDataStack {
-        return CoreDataStack.shared
+        return CoreDataStack()
     }
-    
+
     func resolve() -> ImageFetcher {
-        return ImageFetcher(cache: resolve())
+        let cache: ImageCacheType = resolve()
+        return ImageFetcher(cache: cache)
     }
     
     func resolve() -> ImageCacheType {

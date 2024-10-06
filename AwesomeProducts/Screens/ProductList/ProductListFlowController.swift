@@ -7,6 +7,7 @@ enum ProductsListType: String{
     case deleted = "Deleted Products"
 }
 
+@MainActor
 protocol ProductsListFlowControllerProtocol: FlowControllerProtocol {
     func show(product: Product) -> Void
     func deleted(product: Product) -> Void
@@ -15,7 +16,7 @@ protocol ProductsListFlowControllerProtocol: FlowControllerProtocol {
 final class ProductsListFlowController: UIViewController {
     
     private lazy var animator: ZoomAnimator = dependencies.resolve()
-    private (set) var rootViewController: ProductListViewController?
+    private(set) var rootViewController: ProductListViewController?
     let dependencies: DependencyContainer
     let parentFlow: FlowControllerProtocol?
     let type: ProductsListType

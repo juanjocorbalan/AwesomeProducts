@@ -31,5 +31,3 @@ extension MockDependencyContainer {
         MockURLProtocol.removeStub()
     }
 }
-
-let mockDependencyContainer = MockDependencyContainer()

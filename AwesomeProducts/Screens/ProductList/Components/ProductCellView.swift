@@ -4,7 +4,9 @@ import UI
 
 final class ProductCellView: UICollectionViewCell, StoryboardIdentifiable {
     var cancellables = Set<AnyCancellable>()
-    
+    var imageLoadingTask1: Task<(), any Error>?
+    var imageLoadingTask2: Task<(), any Error>?
+
     @IBOutlet weak var productLabel: UILabel!
     @IBOutlet weak var brandLabel: UILabel!
     @IBOutlet weak var thumbnailImageview: UIImageView!
@@ -17,6 +19,8 @@ final class ProductCellView: UICollectionViewCell, StoryboardIdentifiable {
         super.prepareForReuse()
         cancellables.forEach { $0.cancel() }
         cancellables.removeAll()
+        imageLoadingTask1?.cancel()
+        imageLoadingTask2?.cancel()
         thumbnailImageview.image = nil
         thumbnailImageview.alpha = 0.0
         backgroundImageView.image = nil
@@ -47,16 +51,20 @@ final class ProductCellView: UICollectionViewCell, StoryboardIdentifiable {
         }, for: .touchUpInside)
 
         if let avatarURL = viewModel.avatar {
-            Task {
+            imageLoadingTask1 = Task {
                 let image = try await imageFetcher?.fetchImage(from: avatarURL)
-                showImage(image: image, in: thumbnailImageview)
+                if !Task.isCancelled {
+                    showImage(image: image, in: thumbnailImageview)
+                }
             }
         }
 
         if let backgroundURL = viewModel.background {
-            Task {
+            imageLoadingTask2 = Task {
                 let image = try await imageFetcher?.fetchImage(from: backgroundURL)
-                showImage(image: image, in: backgroundImageView)
+                if !Task.isCancelled {
+                    showImage(image: image, in: backgroundImageView)
+                }
             }
         }
     }

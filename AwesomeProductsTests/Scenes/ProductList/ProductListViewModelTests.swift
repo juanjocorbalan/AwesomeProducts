@@ -7,6 +7,7 @@ import Data
 class ProductListViewModelTests: XCTestCase {
     
     private var cancellables = Set<AnyCancellable>()
+    private let mockDependencyContainer = MockDependencyContainer()
 
     var sut: ProductListViewModel!
     

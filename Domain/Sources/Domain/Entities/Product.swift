@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Product: Codable, Identifiable {
+public struct Product: Codable, Identifiable, Sendable {
     public let id: String
     public var title: String
     public var description: String

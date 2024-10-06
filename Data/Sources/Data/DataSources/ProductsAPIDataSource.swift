@@ -2,14 +2,14 @@ import Foundation
 import Domain
 import HTTPTypes
 
-public protocol ProductsAPIDataSourceType {
+public protocol ProductsAPIDataSourceType: Sendable {
     func getProducts() async throws -> [Product]
 }
 
-public class ProductsAPIDataSource: ProductsAPIDataSourceType {
-    private let apiClient: APIClient
-    
-    public init(apiClient: APIClient) {
+public final class ProductsAPIDataSource: ProductsAPIDataSourceType {
+    private let apiClient: APIClientType
+
+    public init(apiClient: APIClientType) {
         self.apiClient = apiClient
     }
     

@@ -1,10 +1,10 @@
 import Foundation
 
-public protocol RemoveFromListUseCaseType {
+public protocol RemoveFromListUseCaseType: Sendable {
     func execute(with product: Product) async throws -> Void
 }
 
-public class DeleteProductUseCase: RemoveFromListUseCaseType {
+public final class DeleteProductUseCase: RemoveFromListUseCaseType {
     private let repository: ProductsRepositoryType
     
     public init(repository: ProductsRepositoryType) {
@@ -12,6 +12,6 @@ public class DeleteProductUseCase: RemoveFromListUseCaseType {
     }
     
     public func execute(with product: Product) async throws -> Void {
-        try await repository.deleteProductBy(id: product.id.description)
+        try await repository.deleteProductBy(id: product.id)
     }
 }

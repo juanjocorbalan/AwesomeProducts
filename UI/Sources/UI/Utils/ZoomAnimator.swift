@@ -1,5 +1,6 @@
 import UIKit
 
+@MainActor
 public protocol Zoomable where Self: UIViewController {
     var zoomableViewFrame: CGRect { get }
 }

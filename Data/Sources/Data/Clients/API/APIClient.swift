@@ -13,7 +13,7 @@ enum APIError: Error {
     case unknown(Error)
 }
 
-protocol ResourceType {
+public protocol ResourceType {
     associatedtype ResponseType: Codable
     var url: URL { get set }
     var parameters: [String: String]? { get set }
@@ -35,14 +35,18 @@ struct Resource<T: Codable>: ResourceType {
     }
 }
 
-public actor APIClient {
-    private var configuration: URLSessionConfiguration
-    
+public protocol APIClientType: Sendable {
+    func execute<R: ResourceType>(_ resource: R) async throws -> R.ResponseType
+}
+
+public struct APIClient: APIClientType {
+    private let configuration: URLSessionConfiguration
+
     public init(configuration: URLSessionConfiguration = .default) {
         self.configuration = configuration
     }
     
-    func execute<R: ResourceType>(_ resource: R) async throws -> R.ResponseType {
+    public func execute<R: ResourceType>(_ resource: R) async throws -> R.ResponseType {
         do {
             let data = try await request(resource)
             return try JSONDecoder().decode(R.ResponseType.self, from: data)

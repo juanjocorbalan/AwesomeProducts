@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-public protocol ImageCacheType: AnyObject {
+public protocol ImageCacheType: AnyObject, Sendable {
     func image(for key: URL) async -> UIImage?
     func insertImage(_ image: UIImage?, for key: URL) async
     func removeImage(for key: URL) async

@@ -2,6 +2,7 @@ import UIKit
 import Domain
 import UI
 
+@MainActor
 protocol MainTabFlowControllerProtocol: FlowControllerProtocol { 
     func deleted(product: Product, from type: ProductsListType)
 }

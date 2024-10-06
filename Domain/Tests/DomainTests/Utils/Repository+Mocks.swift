@@ -6,16 +6,31 @@ enum RepositoryError: Error {
     case responseNotSet
 }
 
-final class ProductsRepositoryMock: ProductsRepositoryType {
-    var products: [Product] = []
-    var productsResponse: Result<[Product], RepositoryError>?
-    var deletedProductsResponse: Result<[Product], RepositoryError>?
-    var deleteResponse: Result<Void, RepositoryError>?
-    var restoreResponse: Result<Void, RepositoryError>?
-    var getProductsCalled = false
-    var getDeletedProductsCalled = false
-    var deleteProductCalled = false
-    var restoreProductCalled = false
+final actor ProductsRepositoryMock: ProductsRepositoryType {
+    private(set) var productsResponse: Result<[Product], RepositoryError>?
+    private(set) var deletedProductsResponse: Result<[Product], RepositoryError>?
+    private(set) var deleteResponse: Result<Void, RepositoryError>?
+    private(set) var restoreResponse: Result<Void, RepositoryError>?
+    private(set) var getProductsCalled = false
+    private(set) var getDeletedProductsCalled = false
+    private(set) var deleteProductCalled = false
+    private(set) var restoreProductCalled = false
+
+    func setProductResponse(_ response: Result<[Product], RepositoryError>?) {
+        productsResponse = response
+    }
+
+    func setDeletedProductsResponse(_ response: Result<[Product], RepositoryError>?) {
+        deletedProductsResponse = response
+    }
+
+    func setDeleteResponse(_ response: Result<Void, RepositoryError>?) {
+        deleteResponse = response
+    }
+
+    func setRestoreResponse(_ response: Result<Void, RepositoryError>?) {
+        restoreResponse = response
+    }
 
     func getProducts() async throws -> [Product] {
         getProductsCalled = true
@@ -28,7 +43,7 @@ final class ProductsRepositoryMock: ProductsRepositoryType {
             throw RepositoryError.responseNotSet
         }
     }
-    
+
     func deleteProductBy(id: String) async throws {
         deleteProductCalled = true
         switch deleteResponse {
@@ -40,7 +55,7 @@ final class ProductsRepositoryMock: ProductsRepositoryType {
             throw RepositoryError.responseNotSet
         }
     }
-    
+
     func getDeletedProducts() async throws -> [Product] {
         getDeletedProductsCalled = true
         switch deletedProductsResponse {
@@ -52,7 +67,7 @@ final class ProductsRepositoryMock: ProductsRepositoryType {
             throw RepositoryError.responseNotSet
         }
     }
-    
+
     func restoreProductBy(id: String) async throws {
         restoreProductCalled = true
         switch restoreResponse {

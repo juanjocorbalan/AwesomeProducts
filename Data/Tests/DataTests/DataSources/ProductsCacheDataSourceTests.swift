@@ -4,7 +4,7 @@ import Domain
 
 class ProductsCacheDataSourceTests: XCTestCase {
     private var mockCacheClient: CoreDataClient<Product>!
-    var sut: ProductsCacheDataSource<CoreDataClient<Product>>!
+    var sut: ProductsCacheDataSource!
     
     override func setUp() {
         super.setUp()

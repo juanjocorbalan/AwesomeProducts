@@ -1,6 +1,6 @@
 import Foundation
 
-public class RestoreProductUseCase: RemoveFromListUseCaseType {
+public final class RestoreProductUseCase: RemoveFromListUseCaseType {
     private let repository: ProductsRepositoryType
     
     public init(repository: ProductsRepositoryType) {

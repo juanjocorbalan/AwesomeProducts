@@ -1,6 +1,6 @@
 import Foundation
 
-public class GetDeletedProductsUseCase: GetProductsUseCaseType {
+public final class GetDeletedProductsUseCase: GetProductsUseCaseType {
     private let repository: ProductsRepositoryType
     
     public init(repository: ProductsRepositoryType) {

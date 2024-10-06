@@ -1,7 +1,7 @@
 import Foundation
 import Domain
 
-public protocol ProductsCacheDataSourceType {
+public protocol ProductsCacheDataSourceType: Sendable {
     func getProducts<V>(where key: String, equals value: V) async throws -> [Product]
     func createOrUpdate(product: Product) async throws -> Void
     func updateProduct(id: String, with values: [String : Any]) async throws -> Void
@@ -9,7 +9,7 @@ public protocol ProductsCacheDataSourceType {
     func restoreAllProducts() async throws -> Void
 }
 
-public class ProductsCacheDataSource: ProductsCacheDataSourceType {
+public final class ProductsCacheDataSource: ProductsCacheDataSourceType {
     private let cacheClient: any CacheClientType<Product>
     
     public init(cacheClient: any CacheClientType<Product>) {

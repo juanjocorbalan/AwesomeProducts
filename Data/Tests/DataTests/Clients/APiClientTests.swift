@@ -18,8 +18,8 @@ class APIClientTests: XCTestCase {
         sut = APIClient(configuration: mockConfiguration)
     }
     
-    func test_getUsersFromAPI_ShouldSucceed() async {
-        
+    func test_getProductsFromAPI_ShouldSucceed() async {
+
         MockURLProtocol.addStub(with: "products.json", for: resource.url)
         
         var result: ProductsDTO?
@@ -33,7 +33,7 @@ class APIClientTests: XCTestCase {
         }
     }
     
-    func test_getUsersWithBadResponse_ShouldFailWithError() async {
+    func test_getProductsWithBadResponse_ShouldFailWithError() async {
         
         MockURLProtocol.addErrorStub(for: resource.url)
         

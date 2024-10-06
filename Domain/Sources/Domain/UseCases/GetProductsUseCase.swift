@@ -1,10 +1,10 @@
 import Foundation
 
-public protocol GetProductsUseCaseType {
+public protocol GetProductsUseCaseType: Sendable {
     func execute() async throws -> [Product]
 }
 
-public class GetProductsUseCase: GetProductsUseCaseType {
+public final class GetProductsUseCase: GetProductsUseCaseType {
     private let repository: ProductsRepositoryType
     
     public init(repository: ProductsRepositoryType) {

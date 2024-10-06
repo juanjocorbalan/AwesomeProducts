@@ -1,5 +1,6 @@
 import UIKit
 
+@MainActor
 protocol FlowControllerProtocol: UIViewController {
     var dependencies: DependencyContainer { get }
     var parentFlow: FlowControllerProtocol? { get }
