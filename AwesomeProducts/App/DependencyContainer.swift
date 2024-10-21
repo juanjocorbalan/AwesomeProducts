@@ -4,7 +4,21 @@ import UI
 
 @MainActor
 class DependencyContainer {
-    static let shared = DependencyContainer()
+    private lazy var coreDataStack: CoreDataStack = {
+        return CoreDataStack()
+    }()
+
+    private lazy var imageCache: ImageCacheType = {
+        ImageCache(settings: .defaultSettings)
+    }()
+
+    private lazy var imageFetcher: ImageFetcher = {
+        ImageFetcher(cache: resolve())
+    }()
+
+    private lazy var zoomAnimator: ZoomAnimator = {
+        return ZoomAnimator()
+    }()
 
     init() {}
 
@@ -81,7 +95,7 @@ class DependencyContainer {
         return ProductsCacheDataSource(cacheClient: resolve())
     }
     
-    func resolve() -> APIClient {
+    func resolve() -> APIClientType {
         return APIClient(configuration: .default)
     }
     
@@ -90,19 +104,18 @@ class DependencyContainer {
     }
     
     func resolve() -> CoreDataStack {
-        return CoreDataStack()
+        return coreDataStack
     }
 
     func resolve() -> ImageFetcher {
-        let cache: ImageCacheType = resolve()
-        return ImageFetcher(cache: cache)
+        return imageFetcher
     }
     
     func resolve() -> ImageCacheType {
-        return ImageCache(settings: .defaultSettings)
+        return imageCache
     }
     
     func resolve() -> ZoomAnimator {
-        return ZoomAnimator()
+        return zoomAnimator
     }
 }

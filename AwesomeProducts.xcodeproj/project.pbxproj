@@ -3,13 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		DF02B0FA2AE69A6800156278 /* MainTabFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF02B0F92AE69A6800156278 /* MainTabFlowController.swift */; };
 		DF0302A62AE4143800F91EB8 /* AwesomeProductsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0302A52AE4143800F91EB8 /* AwesomeProductsUITests.swift */; };
-		DF0302AB2AE4146600F91EB8 /* TestingAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0302A92AE4146600F91EB8 /* TestingAppDelegate.swift */; };
 		DF0302B62AE4155300F91EB8 /* ProductListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0302B52AE4155300F91EB8 /* ProductListViewModelTests.swift */; };
 		DF0302B82AE416FC00F91EB8 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0302B72AE416FC00F91EB8 /* main.swift */; };
 		DF0302C92AE4425C00F91EB8 /* MockDependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0302C82AE4425C00F91EB8 /* MockDependencyContainer.swift */; };
@@ -54,7 +53,6 @@
 /* Begin PBXFileReference section */
 		DF02B0F92AE69A6800156278 /* MainTabFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabFlowController.swift; sourceTree = "<group>"; };
 		DF0302A52AE4143800F91EB8 /* AwesomeProductsUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AwesomeProductsUITests.swift; sourceTree = "<group>"; };
-		DF0302A92AE4146600F91EB8 /* TestingAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingAppDelegate.swift; sourceTree = "<group>"; };
 		DF0302B52AE4155300F91EB8 /* ProductListViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductListViewModelTests.swift; sourceTree = "<group>"; };
 		DF0302B72AE416FC00F91EB8 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		DF0302C82AE4425C00F91EB8 /* MockDependencyContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockDependencyContainer.swift; sourceTree = "<group>"; };
@@ -117,14 +115,6 @@
 				DF02B0F92AE69A6800156278 /* MainTabFlowController.swift */,
 			);
 			path = MainTab;
-			sourceTree = "<group>";
-		};
-		DF0302A72AE4144800F91EB8 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				DF0302A92AE4146600F91EB8 /* TestingAppDelegate.swift */,
-			);
-			path = Utils;
 			sourceTree = "<group>";
 		};
 		DF0302AC2AE414EB00F91EB8 /* App */ = {
@@ -202,7 +192,6 @@
 			isa = PBXGroup;
 			children = (
 				DF0302B32AE4155300F91EB8 /* Scenes */,
-				DF0302A72AE4144800F91EB8 /* Utils */,
 			);
 			path = AwesomeProductsTests;
 			sourceTree = "<group>";
@@ -360,9 +349,6 @@
 			);
 			mainGroup = DF2A56AE2AE3F3F1003E3579;
 			packageReferences = (
-				DF2A570D2AE3FB21003E3579 /* XCLocalSwiftPackageReference "UI" */,
-				DF2A57102AE3FB54003E3579 /* XCLocalSwiftPackageReference "Domain" */,
-				DF2A57132AE3FB6C003E3579 /* XCLocalSwiftPackageReference "Data" */,
 			);
 			productRefGroup = DF2A56B82AE3F3F1003E3579 /* Products */;
 			projectDirPath = "";
@@ -431,7 +417,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF0302B62AE4155300F91EB8 /* ProductListViewModelTests.swift in Sources */,
-				DF0302AB2AE4146600F91EB8 /* TestingAppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -661,7 +646,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AwesomeProducts.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AwesomeProducts";
 			};
@@ -684,7 +669,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AwesomeProducts.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AwesomeProducts";
 			};
@@ -705,7 +690,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				TEST_TARGET_NAME = AwesomeProducts;
 			};
@@ -726,7 +711,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				TEST_TARGET_NAME = AwesomeProducts;
 			};
@@ -772,21 +757,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCLocalSwiftPackageReference section */
-		DF2A570D2AE3FB21003E3579 /* XCLocalSwiftPackageReference "UI" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = UI;
-		};
-		DF2A57102AE3FB54003E3579 /* XCLocalSwiftPackageReference "Domain" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Domain;
-		};
-		DF2A57132AE3FB6C003E3579 /* XCLocalSwiftPackageReference "Data" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Data;
-		};
-/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		DF2A570E2AE3FB21003E3579 /* UI */ = {

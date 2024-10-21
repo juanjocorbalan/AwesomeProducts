@@ -1,4 +1,3 @@
-import Foundation
 import UIKit
 
 public protocol ImageCacheType: AnyObject, Sendable {
@@ -14,39 +13,33 @@ public final actor ImageCache: ImageCacheType {
         cache.countLimit = settings.countLimit
         return cache
     }()
-    
+
     private let settings: CacheSettings
-    
-    public struct CacheSettings {
+
+    public struct CacheSettings: Sendable {
         let countLimit: Int
-        
+
         public static let defaultSettings = CacheSettings(countLimit: 50)
     }
-    
-    public init(settings: CacheSettings = CacheSettings.defaultSettings) {
+
+    public init(settings: CacheSettings = .defaultSettings) {
         self.settings = settings
     }
-    
+
     public func image(for key: URL) -> UIImage? {
-        return imageCache.object(forKey: key.asNSString)
+        return imageCache.object(forKey: NSString(string: key.absoluteString))
     }
-    
+
     public func insertImage(_ image: UIImage?, for key: URL) {
         guard let image = image else { return removeImage(for: key) }
-        imageCache.setObject(image, forKey: key.asNSString, cost: 1)
+        imageCache.setObject(image, forKey: NSString(string: key.absoluteString), cost: 1)
     }
-    
+
     public func removeImage(for key: URL) {
-        imageCache.removeObject(forKey: key.asNSString)
+        imageCache.removeObject(forKey: NSString(string: key.absoluteString))
     }
-    
+
     public func removeAllImages() {
         imageCache.removeAllObjects()
-    }
-}
-
-extension URL {
-    var asNSString: NSString {
-        self.absoluteString as NSString
     }
 }

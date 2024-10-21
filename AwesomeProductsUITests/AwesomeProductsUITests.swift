@@ -1,9 +1,10 @@
 import XCTest
 
+@MainActor
 class AwesomeProductsUITests: XCTestCase {
     var app: XCUIApplication!
     
-    override func setUp() {
+    override func setUp() async throws {
         app = XCUIApplication()
         continueAfterFailure = false
         app.launchArguments = ["-UITests"]

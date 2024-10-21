@@ -3,31 +3,27 @@ import Data
 
 final class MockDependencyContainer: DependencyContainer {
     lazy var mockConfiguration: URLSessionConfiguration = {
-        let configuration = URLSessionConfiguration.default
+        let configuration = URLSessionConfiguration.ephemeral
         configuration.protocolClasses = [MockURLProtocol.self]
+        defaultStubs()
         return configuration
     }()
-    
-    private var selectedURLSessionConfiguration: URLSessionConfiguration = .default
 
-    override func resolve() -> APIClient {
-        let client = APIClient(configuration: selectedURLSessionConfiguration)
-        return client
+    override func resolve() -> APIClientType {
+        APIClient(configuration: mockConfiguration)
     }
-    
+
     override func resolve() -> CoreDataStack {
         CoreDataStack(inMemory: true)
     }
 }
 
 extension MockDependencyContainer {
-    func setUp() {
-        selectedURLSessionConfiguration = mockConfiguration
+    func defaultStubs() {
         MockURLProtocol.addStub(with: "products.json", for: ProductsAPI.url.products)
     }
-    
-    func tearDown() {
-        selectedURLSessionConfiguration = .default
+
+    func removeStubs() {
         MockURLProtocol.removeStub()
     }
 }

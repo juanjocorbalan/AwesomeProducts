@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 
+@MainActor
 public protocol StoryboardIdentifiable {
     static var storyboardIdentifier: String { get }
 }

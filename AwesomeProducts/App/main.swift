@@ -1,4 +1,6 @@
 import UIKit
 
-let appDelegateClass: AnyClass = NSClassFromString("AwesomeProductsTests.TestingAppDelegate") ?? AppDelegate.self
-UIApplicationMain(CommandLine.argc, CommandLine.unsafeArgv, nil, NSStringFromClass(appDelegateClass))
+UIApplicationMain(CommandLine.argc,
+                  CommandLine.unsafeArgv,
+                  nil,
+                  NSClassFromString("XCTestCase") != nil ? nil : NSStringFromClass(AppDelegate.self))

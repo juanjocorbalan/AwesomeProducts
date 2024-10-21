@@ -11,15 +11,8 @@ class ProductListViewModelTests: XCTestCase {
 
     var sut: ProductListViewModel!
     
-    override func setUp() {
-        super.setUp()
-        mockDependencyContainer.setUp()
+    override func setUp() async throws {
         sut = mockDependencyContainer.resolve(type: .active, parentFlow: nil)
-    }
-    
-    override func tearDown() {
-        mockDependencyContainer.tearDown()
-        super.tearDown()
     }
     
     func test_viewModel_shouldProvideTitle() {
